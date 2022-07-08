@@ -1,0 +1,77 @@
+consumes:
+- application/json
+produces:
+- application/json
+schemes:
+- http
+- https
+swagger: "2.0"
+info:
+  description: Documentation
+  title: defines the open API specification.
+  version: "1.0"
+basePath: /
+paths:
+  /flights/path:
+    post:
+      tags:
+      - flight
+      summary: Returns 200 and path is the path is found.
+      operationId: flightpath
+      parameters:
+      - x-go-name: F
+        name: body
+        in: body
+        schema:
+          $ref: '#/definitions/PostFlightRequestBody'
+      responses:
+        "200":
+          $ref: '#/responses/responseFlightpath200'
+        "400":
+          $ref: '#/responses/responseGenericError400'
+        "500":
+          $ref: '#/responses/responseGenericError500'
+definitions:
+  PostFlightRequestBody:
+    type: object
+    title: PostFlightRequestBody is the request body for flight/path Post.
+    properties:
+      flights:
+        type: array
+        items:
+          type: array
+          items:
+            type: string
+        x-go-name: Flights
+    x-go-package: github.com/dzmitryhil/flights/handler
+  PostFlightResponseBody:
+    type: object
+    title: PostFlightResponseBody is the response body for flight/path Post.
+    properties:
+      path:
+        type: array
+        items:
+          type: string
+        x-go-name: Path
+    x-go-package: github.com/dzmitryhil/flights/handler
+responses:
+  responseFlightpath200:
+    description: Information about the path.
+    schema:
+      $ref: '#/definitions/PostFlightResponseBody'
+    headers:
+      Access-Control-Allow-Origin:
+        type: string
+        description: in:header
+  responseGenericError400:
+    description: (empty)
+    headers:
+      Access-Control-Allow-Origin:
+        type: string
+        description: in:header
+  responseGenericError500:
+    description: (empty)
+    headers:
+      Access-Control-Allow-Origin:
+        type: string
+        description: in:header
